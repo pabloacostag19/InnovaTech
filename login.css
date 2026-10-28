@@ -1,0 +1,213 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: #fff;
+  min-height: 100vh;
+  background: radial-gradient(circle at 70% 40%, #3a1a0e 0%, #140b07 55%, #0d0705 100%);
+  overflow-x: hidden;
+}
+
+/* ---------- ENLACE VOLVER ---------- */
+.volver {
+  position: fixed;
+  top: 28px;
+  left: 32px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  z-index: 5;
+  opacity: .8;
+  transition: opacity .3s, transform .3s;
+}
+.volver:hover { opacity: 1; transform: translateX(-4px); }
+
+/* ---------- CONTENEDOR CENTRADO ---------- */
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 70px 20px 40px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ---------- TARJETA DE VIDRIO ---------- */
+.panel {
+  width: 100%;
+  max-width: 480px;
+  padding: 32px 40px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid rgba(255, 255, 255, .1);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .5);
+  animation: entrar .9s ease both;
+}
+
+.etiqueta {
+  font-size: 12px;
+  letter-spacing: 2px;
+  font-weight: 600;
+  color: #d8c3b8;
+  margin-bottom: 14px;
+}
+
+h1 {
+  font-size: clamp(36px, 4.5vw, 56px);
+  line-height: .95;
+  font-weight: 800;
+  letter-spacing: -2px;
+}
+
+.cursiva {
+  font-family: 'Great Vibes', cursive;
+  font-size: 40px;
+  margin: 4px 0 20px;
+}
+
+/* ---------- FORMULARIOS ---------- */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  max-width: 100%;
+}
+.oculto { display: none !important; }
+
+.campo {
+  display: block;
+  width: 100%;
+}
+
+.campo span {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #d8c3b8;
+  margin-bottom: 8px;
+}
+
+.campo input {
+  display: block;
+  width: 100%;
+  padding: 15px 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, .15);
+  background: rgba(255, 255, 255, .06);
+  color: #fff;
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color .3s, background .3s, transform .3s;
+}
+.campo input::placeholder { color: rgba(255, 255, 255, .35); }
+.campo input:focus {
+  border-color: #ff7a3d;
+  background: rgba(255, 255, 255, .1);
+  transform: translateY(-2px);
+}
+
+.boton {
+  width: 100%;
+  margin-top: 8px;
+  padding: 16px;
+  border: none;
+  border-radius: 999px;
+  background: #fff;
+  color: #000;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform .3s, box-shadow .3s, background .3s, color .3s;
+}
+.boton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(255, 122, 61, .35);
+  background: #ff7a3d;
+  color: #fff;
+}
+
+/* ---------- TEXTO DE CAMBIO ---------- */
+.cambio {
+  margin-top: 28px;
+  font-size: 14px;
+  color: #d8c3b8;
+}
+.cambio a {
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 2px solid #ff7a3d;
+  transition: color .3s;
+}
+.cambio a:hover { color: #ff7a3d; }
+
+/* ---------- LUCES DE FONDO ---------- */
+.luz {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(90px);
+  z-index: 0;
+  pointer-events: none;
+}
+.luz-1 {
+  width: 420px; height: 420px;
+  background: rgba(255, 122, 61, .35);
+  top: -100px; left: -80px;
+  animation: deriva 14s ease-in-out infinite;
+}
+.luz-2 {
+  width: 360px; height: 360px;
+  background: rgba(176, 70, 40, .35);
+  bottom: -120px; right: -60px;
+  animation: deriva 18s ease-in-out infinite reverse;
+}
+.luz-3 {
+  width: 260px; height: 260px;
+  background: rgba(255, 160, 100, .2);
+  top: 45%; left: 55%;
+  animation: deriva 22s ease-in-out infinite;
+}
+
+/* ---------- ANIMACIONES ---------- */
+@keyframes deriva {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(60px, 40px) scale(1.15); }
+  66%      { transform: translate(-40px, 70px) scale(.9); }
+}
+@keyframes entrar {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- CELULAR ---------- */
+@media (max-width: 860px) {
+  .panel { padding: 36px 24px; }
+  .volver { top: 20px; left: 20px; }
+}
+
+
+/* ---------- REGISTRO: nombre y apellido en una fila ---------- */
+.fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+#form-registro { gap: 14px; }
+#form-registro .campo input { padding: 13px 16px; }
+#form-registro .boton { margin-top: 4px; padding: 14px; }
+
+@media (max-width: 520px) {
+  .fila { grid-template-columns: 1fr; }
+}

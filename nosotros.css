@@ -1,0 +1,195 @@
+/* ===== BASE ===== */
+:root{color-scheme:dark;
+  --bg:#160d08;
+  --fg:#fff;
+  --muted:#bfb4a6}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+html,body{background:var(--bg);color:var(--fg);font-family:Inter,system-ui,sans-serif}
+
+/* ===== MENÚ ===== */
+nav{position:absolute;
+  top:0;left:0;
+  width:100%;
+  z-index:100;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:26px 44px;
+  font-size:10px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-weight:700;
+  color:#fff}
+nav .l{display:flex;gap:40px}
+nav .logo{position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:15px;
+  text-transform:none;
+  letter-spacing:-.02em;
+  font-weight:800}
+nav .logo sup{font-size:6px}
+
+nav a{color:inherit;
+  text-decoration:none;
+  position:relative;
+  padding-bottom:3px;
+  transition:opacity .25s ease}
+nav a::after{content:"";
+  position:absolute;
+  left:0;bottom:0;
+  width:100%;height:1px;
+  background:currentColor;
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform .3s ease}
+nav a:hover::after,
+nav a:focus-visible::after,
+nav a[aria-current="page"]::after{transform:scaleX(1)}
+nav:hover a{opacity:.45}
+nav:hover a:hover{opacity:1}
+nav .logo::after{display:none}
+nav .logo{padding-bottom:0}
+nav a:focus-visible{outline:none}
+
+/* ===== SECCIÓN NOSOTROS ===== */
+.it-nos{
+  position:relative;
+  overflow:hidden;
+  min-height:100vh;
+  padding:clamp(80px,14vh,140px) max(48px,calc((100vw - 1280px)/2 + 48px)) clamp(48px,8vh,80px);
+  background:radial-gradient(circle at 85% 20%,#3a1d10 0,#1f110a 35%,#160d08 70%);
+  color:#fff}
+
+.it-nos::before{content:"Tech";
+  position:absolute;
+  bottom:-10vh;
+  right:-10px;
+  font-family:"Mrs Saint Delafield",cursive;
+  font-size:min(520px,60vh);
+  line-height:1;
+  color:rgba(255,255,255,.04);
+  transform:rotate(-8deg);
+  pointer-events:none;
+  user-select:none}
+.it-nos__wrap{position:relative;z-index:1}
+
+.it-nos__eyebrow{font-size:11px;
+  font-weight:700;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:18px}
+
+.it-nos__titulo{font-size:clamp(48px,9vw,110px);
+  line-height:.9;
+  font-weight:800;
+  letter-spacing:-.035em;
+  text-transform:uppercase}
+.it-nos__titulo em{display:block;
+  font-family:"Mrs Saint Delafield",cursive;
+  font-style:normal;
+  text-transform:none;
+  font-weight:400;
+  font-size:.7em;
+  margin-top:8px;
+  letter-spacing:0}
+
+.it-nos__intro{display:grid;
+  grid-template-columns:1.1fr 1fr;
+  gap:48px;
+  align-items:end;
+  margin-top:clamp(40px,8vh,80px);
+  padding-top:28px;
+  border-top:1px solid rgba(255,255,255,.2)}
+.it-nos__intro>p{max-width:460px;
+  font-size:13px;
+  font-weight:700;
+  line-height:1.6;
+  text-transform:uppercase;
+  color:#e8dfd3}
+
+.it-nos__datos{display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px}
+.it-nos__datos div{border-left:1px solid rgba(255,255,255,.25);
+  padding-left:14px}
+.it-nos__datos b{display:block;
+  font-size:clamp(22px,2.6vw,34px);
+  font-weight:800;
+  letter-spacing:-.02em;
+  text-transform:uppercase}
+.it-nos__datos span{display:block;
+  margin-top:6px;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  color:var(--muted)}
+
+.it-nos__valores{display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-top:clamp(40px,8vh,72px)}
+.it-nos__valores article{border:1px solid rgba(255,255,255,.25);
+  padding:20px 18px 24px;
+  min-height:190px;
+  display:flex;
+  flex-direction:column;
+  transition:background .25s ease,border-color .25s ease}
+.it-nos__valores article:hover{background:rgba(255,255,255,.06);
+  border-color:rgba(255,255,255,.55)}
+.it-nos__valores small{font-size:10px;
+  font-weight:700;
+  letter-spacing:.05em;
+  color:var(--muted)}
+.it-nos__valores h3{margin-top:auto;
+  font-size:clamp(18px,1.8vw,24px);
+  font-weight:800;
+  line-height:1;
+  letter-spacing:-.02em;
+  text-transform:uppercase}
+.it-nos__valores article p{margin-top:10px;
+  font-size:11px;
+  font-weight:700;
+  line-height:1.45;
+  text-transform:uppercase;
+  color:var(--muted);
+  max-width:260px}
+
+.it-nos__cierre{display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
+  margin-top:clamp(40px,8vh,72px);
+  padding-top:22px;
+  border-top:1px solid rgba(255,255,255,.2);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.04em;
+  text-transform:uppercase}
+.it-nos__cierre a{color:#fff;
+  text-decoration:none;
+  border-bottom:1px solid #fff;
+  padding-bottom:2px;
+  transition:opacity .25s ease}
+.it-nos__cierre a:hover{opacity:.6}
+
+/* ===== TABLET Y MÓVIL ===== */
+@media(max-width:1000px){
+  nav{padding:22px 24px}
+  .it-nos{padding:80px 28px 40px}
+  .it-nos__intro{grid-template-columns:1fr;gap:32px}
+  .it-nos__valores{grid-template-columns:1fr}
+  .it-nos__valores article{min-height:150px}
+}
+@media(max-width:700px){
+  nav .l{display:none}
+  nav .logo{left:24px;transform:none}
+  .it-nos{padding:64px 20px 32px}
+  .it-nos__datos{grid-template-columns:1fr 1fr}
+  .it-nos::before{font-size:300px}
+}
+

@@ -1,0 +1,388 @@
+:root{color-scheme:dark;
+  --bg:#160d08;
+  --fg:#fff;
+  --muted:#bfb4a6}
+*{box-sizing:border-box;margin:0}
+html,body{background:var(--bg);color:var(--fg);font-family:Inter,system-ui,sans-serif}
+.hero{position:relative;min-height:100vh;
+  overflow:hidden;
+  background:radial-gradient(circle at 55% 45%,#5a2f1b 0,#2a150c 30%,#160d08 65%)
+}
+
+/* Menú */
+nav{position:relative;
+  z-index:5;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 28px;
+  font-size:10px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-weight:700}
+nav .l{display:flex;
+  gap:44px}
+nav .logo{position:absolute;
+  left:50%;
+  transform:translateX(-50%);font-size:15px;
+  text-transform:none;
+  letter-spacing:-.02em;
+  font-weight:800}
+nav .logo sup{font-size:6px}
+
+
+/* ===== MENÚ FIJO ===== */
+nav{position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  color:#fff;
+  mix-blend-mode:difference}   /* blanco sobre fondo oscuro, negro sobre fondo crema */
+
+/* Como el menú ya no ocupa espacio en el hero, se compensa para que nada suba */
+.copy{padding-top:calc(11vh + 52px)}
+
+@media(max-width:700px){
+  .copy{padding-top:calc(6vh + 52px)}
+}
+/* ===== FIN MENÚ FIJO ===== */
+
+/* Texto */
+.copy{position:relative;
+  z-index:5;
+  padding:11vh 28px 0;
+  max-width:520px}
+.tag{font-size:10.5px;
+  letter-spacing:.1em;
+  color:var(--muted);
+  text-transform:uppercase;
+  font-weight:700}
+h1{font-size:clamp(48px,8vw,96px);
+  line-height:.92;font-weight:800;
+  letter-spacing:-.03em;
+  margin-top:18px;
+  text-transform:uppercase}
+h1 em{display:block;
+  font-family:"Mrs Saint Delafield",cursive;
+  font-style:normal;
+  text-transform:none;
+  font-weight:400;
+  font-size:.9em;
+  margin-top:6px;
+  letter-spacing:0}
+.sub{margin-top:24px;
+  font-size:10px;
+  line-height:1.5;
+  text-transform:uppercase;
+  font-weight:700;
+  max-width:250px}
+.cta{display:inline-block;
+  margin-top:18px;
+  font-size:13px;
+  font-weight:700;text-transform:uppercase;
+  border-bottom:2px solid #fff;
+  padding-bottom:2px;
+  color:#fff;
+  text-decoration:none}
+.foot{position:absolute;
+  left:28px;
+  bottom:22px;
+  z-index:5;
+  display:flex;
+  gap:28px;
+  font-size:8px;
+  line-height:1.5;
+  text-transform:uppercase;
+  font-weight:700}
+
+  /* ===== ENLACES DEL MENÚ ===== */
+html{scroll-behavior:smooth}
+
+nav a{color:inherit;
+  text-decoration:none;
+  position:relative;
+  padding-bottom:3px;
+  transition:opacity .25s ease}
+  nav{z-index:100}
+
+/* Línea que aparece debajo al pasar el cursor */
+nav a::after{content:"";
+  position:absolute;
+  left:0;bottom:0;
+  width:100%;height:1px;
+  background:currentColor;
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform .3s ease}
+nav a:hover::after,
+nav a:focus-visible::after{transform:scaleX(1)}
+
+/* Los demás enlaces se atenúan y el que tienes encima resalta */
+nav:hover a{opacity:.45}
+nav:hover a:hover{opacity:1}
+
+/* El logo no necesita línea */
+nav .logo::after{display:none}
+nav .logo{padding-bottom:0}
+
+nav a:focus-visible{outline:none}
+/* ===== FIN ENLACES DEL MENÚ ===== */
+
+/* Escena 3D */
+.stage{position:absolute;right:0;
+  bottom:0;width:72%;
+  height:100%;
+  perspective:1100px;
+  z-index:2}
+.scene{position:absolute;inset:0;
+  transform-style:preserve-3d;
+  transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+  transition:transform .18s ease-out}
+
+/* iPhone 18 frontal borgoña */
+.base-img{position:absolute;
+  left:35%;
+  bottom:-14%;
+  height:87%;
+  width:auto;
+  transform:translateZ(150px) rotate(-12deg);
+  filter:drop-shadow(-30px 30px 40px rgba(0,0,0,.55));cursor:pointer;
+  user-select:none;
+  -webkit-user-drag:none;
+  animation:float 5s ease-in-out infinite}
+
+/* iPhone 18 Pro Max */
+.pro-img{position:absolute;
+  right:6%;
+  bottom:-14%;
+  height:92%;
+  width:auto;
+  transform:translateZ(0) rotateY(-10deg) rotate(7deg);
+  filter:drop-shadow(-30px 30px 40px rgba(0,0,0,.55));
+  cursor:pointer;
+  user-select:none;
+  -webkit-user-drag:none}
+
+/* Etiqueta flotante*/
+.label{position:absolute;
+  right:5%;
+  top:13%;
+  width:34%;
+  min-width:170px;
+  background:rgba(20,16,14,.88);
+  backdrop-filter:blur(6px);
+  border:1px solid #3a322c;
+  border-radius:4px;
+  padding:10px 12px;
+  transform:translateZ(110px);
+  font-size:8px;
+  color:var(--muted);
+  text-transform:uppercase}
+.label small,.label em{font-style:normal;display:block}
+.label b{display:flex;justify-content:space-between;
+  gap:8px;color:#fff;
+  font-size:clamp(11px,1.5vw,15px);
+  margin:3px 0}
+
+@keyframes float{50%{translate:0 -10px}}
+.dot{position:absolute;
+  left:46%;
+  top:36%;
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:#fff;
+  opacity:.85;
+  transform:translateZ(60px);
+  animation:float 3.5s ease-in-out infinite}
+
+/* Móvil */
+@media(max-width:700px){
+  nav .l{display:none}
+  .copy{padding-top:6vh}
+  .hero{min-height:760px}
+  .stage{width:100%;height:56%}
+  .foot{display:none}
+  .pro-img{right:3%;height:92%}
+  .base-img{left:6%;height:70%}
+}
+
+
+/* ===== LUCES ANIMADAS DE FONDO ===== */
+.luz{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(90px);
+  z-index:1;
+  pointer-events:none;
+}
+.luz-1{
+  width:460px; height:460px;
+  background:rgba(255,122,61,.38);
+  top:-120px; left:-100px;
+  animation:deriva 14s ease-in-out infinite;
+}
+.luz-2{
+  width:400px; height:400px;
+  background:rgba(176,70,40,.38);
+  bottom:-140px; right:-80px;
+  animation:deriva 18s ease-in-out infinite reverse;
+}
+.luz-3{
+  width:300px; height:300px;
+  background:rgba(255,160,100,.25);
+  top:40%; left:45%;
+  animation:deriva 22s ease-in-out infinite;
+}
+@keyframes deriva{
+  0%,100%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(60px,40px) scale(1.15)}
+  66%{transform:translate(-40px,70px) scale(.9)}
+}
+/* ===== FIN LUCES ===== */
+
+
+
+
+
+/*  SECCIÓN PRODUCTOS  */
+.it-prod{
+  --it-bg:#efede8;
+  --it-ink:#0d0d0d;
+  --it-line:rgba(13,13,13,.45);
+  position:relative;
+  height:150vh;               /* más alto = la animación va más lenta */
+  background:var(--it-bg);
+  color:var(--it-ink)}
+
+/* Pantalla que se queda fija mientras se arma la sección */
+.it-prod__card{position:sticky;
+  top:0;
+  height:100vh;
+  overflow:hidden;
+  background:var(--it-bg);
+ padding:calc(clamp(18px,4vh,40px) + 56px) max(48px,calc((100vw - 1280px)/2 + 48px)) clamp(18px,4vh,40px);
+  display:flex;
+  flex-direction:column}
+.it-prod__card>*{position:relative;z-index:1}
+
+/* Marca de agua */
+.it-prod__card::before{content:"Innova";
+  position:absolute;
+  top:-6vh;
+  right:-20px;
+  font-family:"Mrs Saint Delafield",cursive;
+  font-size:min(520px,70vh);
+  line-height:1;
+  color:rgba(0,0,0,.055);
+  transform:rotate(-8deg);
+  pointer-events:none;
+  user-select:none}
+
+.it-prod__eyebrow{font-size:11px;
+  font-weight:700;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  margin-bottom:clamp(8px,2vh,18px)}
+
+.it-prod__cabecera{display:flex;
+  align-items:flex-end;
+  gap:28px;
+  flex-wrap:wrap;
+  margin-bottom:clamp(12px,3vh,28px)}
+.it-prod__cabecera h2{font-size:clamp(40px,11vh,100px);
+  line-height:.88;
+  font-weight:800;
+  letter-spacing:-.035em;
+  text-transform:uppercase}
+.it-prod__cabecera p{max-width:230px;
+  font-size:11px;
+  font-weight:700;
+  line-height:1.35;
+  text-transform:uppercase;
+  padding-bottom:6px}
+
+/* Letras del título (las separa el JavaScript) */
+.it-palabra{display:inline-block;white-space:nowrap}
+.it-letra{display:inline-block;will-change:transform,opacity}
+
+.it-prod__vertodo{display:flex;
+  justify-content:flex-end;
+  margin-bottom:10px}
+.it-prod__vertodo a{font-size:11px;
+  font-weight:700;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  color:var(--it-ink);
+  text-decoration:none;
+  border-bottom:1px solid var(--it-ink);
+  padding-bottom:2px}
+.it-prod__vertodo a:hover{opacity:.6}
+
+.it-prod__grid{flex:1;
+  min-height:0;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:12px}
+.it-tarjeta{position:relative;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  min-height:0;
+  border:1px solid var(--it-line);
+  padding:12px;
+  text-decoration:none;
+  color:inherit;
+  transition:background .25s ease}
+.it-tarjeta:hover{background:rgba(255,255,255,.55)}
+
+.it-tag{font-size:10px;
+  font-weight:700;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  opacity:.75}
+
+.it-media{position:absolute;
+  inset:30px 14px 42px;
+  display:grid;
+  place-items:center}
+.it-media img,.it-media svg{grid-area:1/1;
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
+  transition:transform .35s ease}
+.it-tarjeta:hover .it-media img,
+.it-tarjeta:hover .it-media svg{transform:scale(1.06) translateY(-4px)}
+.it-media svg{width:78%;height:100%;color:#2a1a12}
+
+.it-info{position:relative;
+  z-index:1;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:8px;
+  font-size:11px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.02em}
+.it-precio{font-variant-numeric:tabular-nums}
+
+/* Pantallas pequeñas: sin pantalla fija, la sección crece hacia abajo
+   y cada elemento aparece cuando va entrando en pantalla */
+@media(max-width:1000px),(max-height:560px){
+  .it-prod{height:auto}
+  .it-prod__card{position:relative;
+    height:auto;
+    padding:48px 28px 40px}
+  .it-prod__grid{grid-template-columns:repeat(3,1fr)}
+  .it-tarjeta{aspect-ratio:1/1.15}
+}
+@media(max-width:700px){
+  .it-prod__card{padding:36px 20px 28px}
+  .it-prod__cabecera h2{font-size:clamp(44px,14vw,72px)}
+  .it-prod__grid{grid-template-columns:repeat(2,1fr)}
+  .it-prod__card::before{font-size:320px}
+}
+/* ===== FIN SECCIÓN PRODUCTOS ===== */
+
+

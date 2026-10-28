@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>InnovaTech | Tienda</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tienda.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html">InnovaTech<sup>®</sup></a>
+  <form class="search" id="sf" role="search">
+    <input id="q" type="search" placeholder="Buscar productos…" aria-label="Buscar productos">
+    <button aria-label="Buscar"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
+  </form>
+  <div class="acts">
+    <button class="ico" id="userBtn" aria-label="Cuenta"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span id="userL"></span></button>
+    <button class="ico" id="cartBtn" aria-label="Carrito"><svg class="i" viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l3 12h11l2-8H6"/></svg><span class="badge" id="cartN" hidden>0</span></button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="slides">
+  <div class="slide on s1">
+    <div class="tx"><small>// Nuevos ingresos</small><h2>iPhone 18<br>Pro Max</h2><em>en dos colores</em><button class="btn" data-cat="celulares">Comprar ahora</button></div>
+    <div class="ph"><img class="a" src="imágenes/imagen 1.png"iPhone 18 Pro Max borgoña"><img class="b" src="imágenes/imageen2" alt="iPhone 18 Pro Max glaciar"></div>
+  </div>
+  <div class="slide s2">
+    <div class="tx"><small>// Para trabajar y crear</small><h2>Laptops<br>Pro</h2><em>potencia real</em><button class="btn" data-cat="laptops">Comprar ahora</button></div>
+    <div class="ph lap"><img class="a" src="imágenes/imagen 5.png" alt="Laptop HP vista trasera"><img class="b" src="imágenes/imagen 6.png" alt="Laptop HP vista frontal"></div>
+  </div>
+  <div class="slide s3">
+    <div class="tx"><small>// Sonido y tiempo</small><h2>Audífonos<br>y relojes</h2><em>tu día a día</em><button class="btn" data-cat="audifonos">Comprar ahora</button></div>
+    <div class="ph aud"><img class="a" src="imágenes/imagen 3.png" alt="Audífonos Sony vista lateral"><img class="b" src="imágenes/imagen 4.png" alt="Audífonos Sony vista frontal"></div>
+  </div>
+  <button class="arw l" data-prev aria-label="Anterior">‹</button>
+  <button class="arw r" data-next aria-label="Siguiente">›</button>
+  <div class="dots" id="dots"></div>
+</div>
+    <div class="side">
+      <button class="promo p1" data-cat="acc-celular"><small>Oferta de temporada</small><b>Accesorios<br>para celulares</b><span class="btn sm">Comprar ahora</span><img class="pi" src="imágenes/imagen 7.png" alt="Funda MagSafe para iPhone"></button>
+      <button class="promo p2" data-cat="relojes"><small>Oferta de temporada</small><b>Relojes<br>inteligentes</b><span class="btn sm">Comprar ahora</span><img class="pi" src="imágenes/imagen 8.png" alt="Reloj inteligente negro"></button>
+    </div>
+    </section>
+
+  <div class="catwrap"><div class="cats" id="cats"></div><button class="cn" data-scroll aria-label="Ver más">›</button></div>
+  <div id="shop"></div>
+</main>
+
+<div class="ov" id="ov" data-closecart></div>
+<aside class="drawer" id="drawer" aria-label="Carrito">
+  <div class="dh"><h3>Tu carrito</h3><button class="x" data-closecart aria-label="Cerrar">×</button></div>
+  <ul id="items"></ul>
+  <div class="df"><div class="tt"><span>Total</span><b id="total">$0</b></div><a class="btn" id="checkout" target="_blank" rel="noopener">Finalizar por WhatsApp</a></div>
+</aside>
+<dialog id="login"></dialog>
+<a class="wa" id="wa" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 360 362" fill="none" aria-hidden="true"><path fill="#fff" fill-rule="evenodd" d="M307.546 52.566C273.709 18.684 228.706.017 180.756 0 81.951 0 1.538 80.404 1.504 179.235c-.017 31.594 8.242 62.432 23.928 89.609L0 361.736l95.024-24.925c26.179 14.285 55.659 21.805 85.655 21.814h.077c98.788 0 179.21-80.413 179.244-179.244.017-47.898-18.608-92.926-52.454-126.807v-.008Zm-126.79 275.788h-.06c-26.73-.008-52.952-7.194-75.831-20.765l-5.44-3.231-56.391 14.791 15.05-54.981-3.542-5.638c-14.912-23.721-22.793-51.139-22.776-79.286.035-82.14 66.867-148.973 149.051-148.973 39.793.017 77.198 15.53 105.328 43.695 28.131 28.157 43.61 65.596 43.593 105.398-.035 82.149-66.867 148.982-148.982 148.982v.008Zm81.719-111.577c-4.478-2.243-26.497-13.073-30.606-14.568-4.108-1.496-7.09-2.243-10.073 2.243-2.982 4.487-11.568 14.577-14.181 17.559-2.613 2.991-5.226 3.361-9.704 1.117-4.477-2.243-18.908-6.97-36.02-22.226-13.313-11.878-22.304-26.54-24.916-31.027-2.613-4.486-.275-6.91 1.959-9.136 2.011-2.011 4.478-5.234 6.721-7.847 2.244-2.613 2.983-4.486 4.478-7.469 1.496-2.991.748-5.603-.369-7.847-1.118-2.243-10.073-24.289-13.812-33.253-3.636-8.732-7.331-7.546-10.073-7.692-2.613-.13-5.595-.155-8.586-.155-2.991 0-7.839 1.118-11.947 5.604-4.108 4.486-15.677 15.324-15.677 37.361s16.047 43.344 18.29 46.335c2.243 2.991 31.585 48.225 76.51 67.632 10.684 4.615 19.029 7.374 25.535 9.437 10.727 3.412 20.49 2.931 28.208 1.779 8.604-1.289 26.498-10.838 30.228-21.298 3.73-10.46 3.73-19.433 2.613-21.298-1.117-1.865-4.108-2.991-8.586-5.234l.008-.017Z" clip-rule="evenodd"/></svg></a>
+<script type="module" src="tienda.js"></script>
+</body>
+</html>

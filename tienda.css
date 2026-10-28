@@ -1,0 +1,831 @@
+/* Colores del modo claro (los que se usan por defecto) */
+:root {
+  --bg: #efede8;                 
+  --card: #fff;                 
+  --ink: #160d08;                
+  --mut: #6f645a;                
+  --line: rgba(22, 13, 8, .12);  
+  --peach: #f6dccb;              
+  --acc: #d4602c;                
+  --btn: #000;                   
+  --btn-borde: rgba(255, 255, 255, .35); 
+}
+/* Modo oscuro automático (si el sistema del usuario está en oscuro) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #160d08;
+    --card: #241510;
+    --ink: #f3ece3;
+    --mut: #bfb4a6;
+    --line: rgba(255, 255, 255, .14);
+    --peach: #3a2218;
+  }
+}
+/* Modo oscuro forzado manualmente */
+:root[data-theme="dark"] {
+  --bg: #160d08;
+  --card: #241510;
+  --ink: #f3ece3;
+  --mut: #bfb4a6;
+  --line: rgba(255, 255, 255, .14);
+  --peach: #3a2218;
+}
+/* Zona segura del móvil (notch / barras del sistema) */
+:root {
+  box-sizing: border-box;
+  color-scheme: light dark;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+/* Desplazamiento suave y margen para la barra fija */
+html {
+  scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 84px);
+  scroll-behavior: smooth;
+}
+/* Reset: todo con box-sizing uniforme y sin márgenes */
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+/* Cuerpo de la página */
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Inter, system-ui, sans-serif;
+}
+/* Franja que cubre la zona segura superior en móviles */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  background: var(--card);
+  z-index: 30;
+}
+/* Los botones heredan fuente y color, sin estilo del navegador */
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+/* Icono SVG (lupa, usuario, carrito) */
+.i {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+/* Botón principal naranja (carrito, login, etc.) */
+.btn {
+  display: inline-block;
+  background: var(--acc);
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+}
+/* Versión pequeña del botón */
+.btn.sm {
+  font-size: 11px;
+  padding: 7px 14px;
+}
+/* Enlace de texto subrayado ("Ver todo ›") */
+.lnk {
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: underline;
+}
+/* Contenedor de la barra (se queda fija arriba) */
+.top {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 20;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 20px;
+  align-items: center;
+  padding: 14px 28px;
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+}
+/* Logo InnovaTech */
+.brand {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -.03em;
+  color: inherit;
+  text-decoration: none;
+}
+.band sup {
+  font-size: 8px;
+}
+/* Buscador (caja redondeada) */
+.search {
+  display: flex;
+  align-items: center;
+  max-width: 620px;
+  width: 100%;
+  justify-self: center;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0 6px 0 18px;
+}
+.search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: none;
+  outline: 0;
+  color: inherit;
+  font: inherit;
+  padding: 11px 0;
+}
+.search button {
+  padding: 8px;
+}
+/* Grupo de iconos de la derecha (cuenta y carrito) */
+.acts {
+  display: flex;
+  gap: 6px;
+}
+.ico {
+  position: relative;
+  padding: 8px;
+}
+/* Globito con la cantidad de productos en el carrito */
+.badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  background: var(--acc);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+}
+.badge[hidden] {
+  display: none;
+}
+/* Inicial del usuario sobre el icono de cuenta */
+#userL:not(:empty) {
+  position: absolute;
+  bottom: 2px;
+  right: 0;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--acc);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+}
+/* Rejilla: carrusel grande (2/3) + tarjetas laterales (1/3) */
+.hero {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+  margin: 20px 28px;
+  height: 380px;
+}
+/* Caja del carrusel */
+.slides {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+}
+/* Cada slide: texto a la izquierda, fotos a la derecha */
+.slide {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  padding-left: 44px;
+  color: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .5s;
+}
+/* Slide visible */
+.slide.on {
+  opacity: 1;
+  pointer-events: auto;
+}
+/* Fondo del slide 1 — iPhone (marrón oscuro) */
+.s1 {
+  background: linear-gradient(120deg, #160d08, #3a1d10 60%, #6b3118);
+}
+/* Fondo del slide 2 — Laptops (naranja) */
+.s2 {
+  background: linear-gradient(120deg, #c4601e, #ff9a4a);
+}
+/* Fondo del slide 3 — Audífonos (azul claro, texto oscuro) */
+.s3 {
+  background: linear-gradient(120deg, #c9d8ea, #eef3f9);
+  color: #160d08;
+}
+/* Bloque de texto centrado verticalmente */
+.tx {
+  align-self: center;
+}
+/* Etiqueta pequeña superior ("// Nuevos ingresos") */
+.tx small {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  opacity: .8;
+}
+/* Título grande */
+.tx h2 {
+  font-size: clamp(30px, 4.2vw, 56px);
+  line-height: .95;
+  font-weight: 800;
+  letter-spacing: -.03em;
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+/* Frase en letra cursiva ("en dos colores") */
+.tx em {
+  display: block;
+  font-family: "Mrs Saint Delafield", cursive;
+  font-style: normal;
+  font-size: 40px;
+  margin: 6px 0 16px;
+}
+/* iPhone: dos teléfonos inclinados, uno a cada lado */
+.ph {
+  position: relative;
+}
+.ph img {
+  position: absolute;
+  height: 92%;
+  bottom: -14%;
+  filter: drop-shadow(-14px 14px 20px rgba(0, 0, 0, .5));
+}
+.ph .a { left: 6%;  transform: rotate(-9deg); }   /* iPhone izquierdo */
+.ph .b { right: 6%; transform: rotate(7deg); }    /* iPhone derecho */
+
+/* Laptops: juntas y superpuestas, igual que los iPhone */
+.ph.lap img {
+  height: auto;
+  width: 80%;
+}
+
+.ph.lap .a {                       /* laptop de atrás (vista trasera) */
+  left: -8%;
+  bottom: 26%;
+  transform: rotate(-8deg);
+  z-index: 1;
+}
+
+.ph.lap .b {                       /* laptop de adelante (vista frontal) */
+  right: -6%;
+  bottom: -8%;
+  transform: rotate(6deg);
+  z-index: 2;
+}
+
+/* Audífonos: juntos y superpuestos, igual que los iPhone */
+.ph.aud img {
+  filter: drop-shadow(-10px 12px 16px rgba(22, 13, 8, .35));
+}
+
+.ph.aud .a {                       /* audífonos grandes (vista lateral) */
+  height: 96%;
+  left: 2%;
+  bottom: -6%;
+  transform: rotate(-6deg);
+  z-index: 2;
+}
+
+.ph.aud .b {                       /* audífonos pequeños (vista frontal) */
+  height: auto;
+  width: 72%;
+  right: -6%;
+  bottom: 14%;
+  transform: rotate(7deg);
+  z-index: 1;
+}
+
+/* Emoji grande de respaldo (cuando no hay foto) */
+.big {
+  display: grid;
+  place-items: center;
+  font-size: 150px;
+}
+/* Flechas ‹ › */
+.arw {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .85);
+  color: #160d08;
+  font-size: 20px;
+  z-index: 5;
+}
+
+.arw.l { left: 12px; }     /* flecha izquierda */
+.arw.r { right: 12px; }    /* flecha derecha */
+/* Contenedor de los puntitos */
+.dots {
+  position: absolute;
+  left: 44px;
+  bottom: 16px;
+  display: flex;
+  gap: 6px;
+  z-index: 5;
+}
+/* Cada puntito */
+.dots i {
+  width: 7px;
+  height: 7px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, .5);
+  cursor: pointer;
+  transition: .3s;
+}
+/* Puntito activo (se alarga) */
+.dots i.on {
+  width: 22px;
+  background: #fff;
+}
+/* Columna con las dos tarjetas apiladas */
+.side {
+  display: grid;
+  gap: 16px;
+  grid-template-rows: 1fr 1fr;
+}
+/* Estilo común de cada tarjeta */
+.promo {
+  position: relative;
+  border-radius: 18px;
+  padding: 20px 22px;
+  color: #fff;
+  text-align: left;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.promo small {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  opacity: .85;
+}
+.promo b {
+  font-size: 22px;
+  line-height: 1.05;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+/* Emoji decorativo en la esquina */
+.promo i {
+  position: absolute;
+  right: 16px;
+  bottom: 8px;
+  font-size: 64px;
+  font-style: normal;
+}
+/* Imagen común: centrada verticalmente a la derecha, con sombra */
+.promo .pi {
+  position: absolute;
+  right: 14px;
+  bottom: 50%;
+  transform: translateY(50%) rotate(8deg);
+  height: 82%;
+  width: auto;
+  pointer-events: none;
+  filter: drop-shadow(-8px 10px 12px rgba(0, 0, 0, .45));
+}
+/* Funda de iPhone (tarjeta 1) */
+.p1 .pi {
+  right: 8px;
+  height: 72%;
+  transform: translateY(50%) rotate(10deg);
+}
+/* Reloj negro (tarjeta 2) */
+.p2 .pi {
+  right: -5px;
+  height: 100%;
+  transform: translateY(50%) rotate(-10deg);
+}
+/* Tarjeta 1 — Accesorios (marrón oscuro) */
+.p1 {
+  background: linear-gradient(120deg, #160d08, #3a1d10);
+}
+/* Tarjeta 2 — Relojes (naranja) */
+.p2 {
+  background: linear-gradient(120deg, #c4552b, #ff7a3a);
+}
+/* Un solo color para TODOS los slides y tarjetas laterales.
+   Para cambiar el color, edita --btn en la sección 1.
+   El borde claro sirve para que el botón se distinga sobre fondos oscuros. */
+.slide .btn,
+.promo .btn {
+  background: var(--btn);
+  color: #fff;
+  border: 1px solid var(--btn-borde);
+}
+/* Contenedor con la flecha de "ver más" */
+.catwrap {
+  position: relative;
+  margin: 0 28px;
+}
+/* Fila de categorías con scroll horizontal */
+.cats {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 6px 4px 12px;
+  scrollbar-width: none;
+}
+/* Cada categoría (círculo + nombre) */
+.cat {
+  flex: 1 0 108px;
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+/* Círculo con el emoji */
+.cat span {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: var(--peach);
+  display: grid;
+  place-items: center;
+  font-size: 36px;
+  transition: .2s;
+}
+/* Categoría al pasar el mouse o seleccionada */
+.cat:hover span,
+.cat.on span {
+  background: var(--acc);
+  transform: translateY(-3px);
+}
+/* Botón › para desplazar las categorías */
+.cn {
+  position: absolute;
+  right: 0;
+  top: 28px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--card);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .25);
+}
+/* Bloque (sección con título) */
+.blk {
+  margin: 22px 28px;
+  background: var(--card);
+  border-radius: 18px;
+  padding: 20px;
+}
+/* Cabecera del bloque: título + "Ver todo ›" */
+.bh {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.bh h2 {
+  font-size: 18px;
+  font-weight: 800;
+}
+/* Fila horizontal de productos (con scroll) */
+.row {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+.row .card {
+  flex: 0 0 200px;
+}
+/* Rejilla de productos (resultados de búsqueda / categoría) */
+.wrap {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 14px;
+}
+/* Tarjeta de producto */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+}
+/* Imagen del producto */
+.im {
+  aspect-ratio: 1;
+  border-radius: 12px;
+  background: var(--peach);
+  display: grid;
+  place-items: center;
+  font-size: 64px;
+  overflow: hidden;
+}
+.im:has(img) {
+  position: relative;
+}
+.im img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+/* Nombre del producto */
+.card h3 {
+  font-size: 13px;
+  font-weight: 500;
+  min-height: 2.6em;
+}
+/* Precio */
+.pr {
+  font-size: 18px;
+  font-weight: 800;
+}
+/* Etiquetas "Entrega rápida" y "Envío gratis" */
+.chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.chips em {
+  font-style: normal;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 7px;
+  border-radius: 6px;
+  background: rgba(40, 160, 90, .16);
+  color: #1e8a4f;
+}
+.chips .g {                       /* etiqueta morada (envío gratis) */
+  background: rgba(150, 70, 200, .16);
+  color: #9a55d0;
+}
+/* Botón "Agregar al carrito" */
+.add {
+  margin-top: auto;
+  padding: 9px;
+  border-radius: 10px;
+  background: var(--ink);
+  color: var(--bg);
+  font-weight: 700;
+  font-size: 12px;
+}
+.add:hover {
+  background: var(--acc);
+  color: #fff;
+}
+/* Mensaje cuando no hay resultados */
+.empty {
+  padding: 20px;
+  color: var(--mut);
+}
+/* Fondo oscuro detrás del carrito */
+.ov {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .5);
+  opacity: 0;
+  pointer-events: none;
+  transition: .3s;
+  z-index: 40;
+}
+.ov.on {
+  opacity: 1;
+  pointer-events: auto;
+}
+/* Panel del carrito (entra desde la derecha) */
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(400px, 100%);
+  background: var(--card);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform .35s;
+  padding: calc(18px + env(safe-area-inset-top, 0px)) 20px calc(18px + env(safe-area-inset-bottom, 0px));
+}
+.drawer.open {
+  transform: none;
+}
+/* Cabecera del carrito ("Tu carrito" + ×) */
+.dh {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+/* Botón × */
+.x {
+  font-size: 24px;
+  line-height: 1;
+  padding: 4px 8px;
+}
+/* Lista de productos en el carrito */
+#items {
+  list-style: none;
+  flex: 1;
+  overflow-y: auto;
+}
+
+#items li {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  gap: 12px;
+  align-items: start;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+}
+/* Miniatura del producto */
+.th {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  background: var(--peach);
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+}
+.th {
+  overflow: hidden;
+}
+.th img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+#items small {
+  display: block;
+  color: var(--mut);
+  margin: 2px 0 6px;
+}
+/* Botones − cantidad + */
+.qty {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.qty button {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+}
+/* Pie del carrito: total + botón de WhatsApp */
+.df {
+  padding-top: 14px;
+}
+
+.tt {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+.df .btn {
+  display: block;
+  text-align: center;
+  padding: 13px;
+}
+/* Cuadro de diálogo */
+dialog {
+  margin: auto;
+  border: 0;
+  border-radius: 16px;
+  padding: 24px;
+  width: min(360px, 92vw);
+  background: var(--card);
+  color: var(--ink);
+}
+/* Fondo oscuro detrás del diálogo */
+dialog::backdrop {
+  background: rgba(0, 0, 0, .55);
+}
+
+dialog h3 {
+  margin-bottom: 12px;
+}
+/* Formulario de login */
+dialog form {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+/* Campos de correo y contraseña */
+dialog input {
+  padding: 11px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: inherit;
+  font: inherit;
+}
+
+dialog small {
+  display: block;
+  color: var(--mut);
+  margin-bottom: 8px;
+}
+/* BOTÓN FLOTANTE DE WHATSAPP */
+.wa {
+  position: fixed;
+  right: 20px;
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #25d366;
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .35);
+  z-index: 15;
+}
+.wa svg {
+  width: 30px;
+  height: 30px;
+}
+/*  ADAPTACIÓN A MÓVILES (hasta 700 px)*/
+@media (max-width: 700px) {
+  /* Barra superior más compacta */
+  .top {
+    gap: 10px;
+    padding: 12px 16px;
+  }
+/* Márgenes laterales más pequeños */
+  .hero,
+  .catwrap,
+  .blk {
+    margin-left: 14px;
+    margin-right: 14px;
+  }
+  /* Hero en una sola columna */
+  .hero {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .slides {
+    height: 340px;
+  }
+  .slide {
+    padding-left: 22px;
+    grid-template-columns: 1fr 1fr;
+  }
+  .tx em {
+    font-size: 30px;
+  }
+  .big {
+    font-size: 90px;
+  }
+  /* Tarjetas laterales lado a lado */
+  .side {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+  .promo {
+    min-height: 150px;
+    padding: 14px;
+  }
+  .promo b {
+    font-size: 15px;
+  }
+  .promo i {
+    font-size: 42px;
+  }
+}
