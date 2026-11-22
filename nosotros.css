@@ -9,24 +9,42 @@ html,body{background:var(--bg);color:var(--fg);font-family:Inter,system-ui,sans-
 
 /* ===== MENÚ ===== */
 nav{
-  position:fixed; top:0; left:0; width:100%; z-index:100;
-  display:flex; justify-content:space-between; align-items:center;
+  position:absolute; 
+  top:0; left:0; 
+  width:100%;
+  z-index:100;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
   padding:20px 28px;
-  font-size:10px; letter-spacing:.08em; text-transform:uppercase; font-weight:700;
+  font-size:10px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-weight:700;
   color:#fff;
   mix-blend-mode:difference;
 }
 nav .l{display:flex; gap:44px}
 nav .logo{
-  position:absolute; left:50%; transform:translateX(-50%);
-  font-size:15px; text-transform:none; letter-spacing:-.02em; font-weight:800;
-  margin:0; padding:8px 14px;
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:15px; 
+  text-transform:none; 
+  letter-spacing:-.02em; 
+  font-weight:800;
+  margin:0; 
+  padding:8px 14px;
 }
 nav .logo sup{font-size:6px}
 
 nav a{
-  color:inherit; text-decoration:none; position:relative;
-  padding:8px 14px; margin:-8px -14px; border-radius:10px;
+  color:inherit; 
+  text-decoration:none; 
+  position:relative;
+  padding:8px 14px; 
+  margin:-8px -14px; 
+  border-radius:10px;
   transition:opacity .25s ease, background .25s ease;
 }
 
@@ -176,7 +194,8 @@ nav a[aria-current="page"]{
 @media(max-width:1000px){
   nav{padding:22px 24px}
   .it-nos{padding:80px 28px 40px}
-  .it-nos__intro{grid-template-columns:1fr;gap:32px}
+  .it-nos__intro{grid-template-columns:1fr;
+    gap:32px}
   .it-nos__valores{grid-template-columns:1fr}
   .it-nos__valores article{min-height:150px}
 }
