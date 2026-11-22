@@ -181,3 +181,37 @@ hero.addEventListener('pointerleave', reset);
   medir();
 })();
 /* ===== FIN SECCIÓN PRODUCTOS ===== */
+
+/* ===== CUENTA REGRESIVA DE OFERTAS ===== */
+(function () {
+  var h = document.getElementById("c-h");
+  var m = document.getElementById("c-m");
+  var s = document.getElementById("c-s");
+  if (!h || !m || !s) return;
+
+  var DURACION = 24 * 60 * 60 * 1000;
+  var fin = Number(localStorage.getItem("it_oferta_fin")) || 0;
+  if (fin < Date.now()) {
+    fin = Date.now() + DURACION;
+    localStorage.setItem("it_oferta_fin", String(fin));
+  }
+
+  function dos(n) { return String(n).padStart(2, "0"); }
+
+  function tic() {
+    var resto = fin - Date.now();
+    if (resto <= 0) {
+      fin = Date.now() + DURACION;
+      localStorage.setItem("it_oferta_fin", String(fin));
+      resto = DURACION;
+    }
+    var total = Math.floor(resto / 1000);
+    h.textContent = dos(Math.floor(total / 3600));
+    m.textContent = dos(Math.floor((total % 3600) / 60));
+    s.textContent = dos(total % 60);
+  }
+
+  tic();
+  setInterval(tic, 1000);
+})();
+/* ===== FIN CUENTA REGRESIVA ===== */
