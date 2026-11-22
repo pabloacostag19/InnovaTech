@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>InnovaTech | Pago</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="pago.css">
+</head>
+<body>
+
+  <!-- Luces animadas de fondo (las mismas de envio.html) -->
+  <div class="luz luz-1"></div>
+  <div class="luz luz-2"></div>
+  <div class="luz luz-3"></div>
+
+  <a class="volver no-print" href="tienda.html">‹ Volver a la tienda</a>
+
+  <!-- ====== Elegir método y pagar ====== -->
+  <main class="pago" id="vista-pago">
+
+    <section class="panel">
+      <p class="etiqueta">PAGO SEGURO</p>
+      <h1>¿Cómo quieres pagar?</h1>
+
+      <div class="metodos" id="metodos">
+        <button type="button" class="metodo on" data-metodo="tarjeta">
+          <span class="mi">💳</span><b>Tarjeta</b><small>Crédito o débito</small>
+        </button>
+        <button type="button" class="metodo" data-metodo="electronico">
+          <span class="mi">📲</span><b>Pago electrónico</b><small>Apple Pay, Google Pay</small>
+        </button>
+        <button type="button" class="metodo" data-metodo="transferencia">
+          <span class="mi">🏦</span><b>Transferencia</b><small>Desde tu banco</small>
+        </button>
+      </div>
+
+      <!-- ===== TARJETA ===== -->
+      <form id="f-tarjeta" class="formulario" autocomplete="off" novalidate>
+
+        <div class="tarjeta" id="tarjeta" data-banco="generica">
+          <div class="t-brillo"></div>
+          <div class="t-top">
+            <span class="t-banco" id="t-banco">Tu tarjeta</span>
+            <span class="t-marca" id="t-marca"></span>
+          </div>
+          <div class="t-chip"></div>
+          <div class="t-num" id="t-num">•••• •••• •••• ••••</div>
+          <div class="t-bot">
+            <div><small>TITULAR</small><span id="t-nom">NOMBRE APELLIDO</span></div>
+            <div><small>VENCE</small><span id="t-venc">MM/AA</span></div>
+          </div>
+        </div>
+
+        <p class="detectado" id="detectado">Escribe el número y detectamos tu banco.</p>
+
+        <label class="campo">Número de tarjeta
+          <input id="numero" type="text" inputmode="numeric" maxlength="19" placeholder="0000 0000 0000 0000">
+        </label>
+
+        <label class="campo">Nombre en la tarjeta
+          <input id="titular" type="text" placeholder="Como aparece en la tarjeta">
+        </label>
+
+        <div class="fila">
+          <label class="campo">Vencimiento
+            <input id="venc" type="text" inputmode="numeric" maxlength="5" placeholder="MM/AA">
+          </label>
+          <label class="campo">CVV
+            <input id="cvv" type="password" inputmode="numeric" maxlength="4" placeholder="123">
+          </label>
+        </div>
+
+        <p class="error" id="error-t" hidden></p>
+        <button class="boton" type="submit" id="pagar-t">PAGAR</button>
+      </form>
+
+      <!-- ===== PAGO ELECTRÓNICO ===== -->
+      <div id="f-electronico" class="formulario oculto">
+        <button type="button" class="wallet apple" data-wallet="Apple Pay">Apple Pay</button>
+        <button type="button" class="wallet google" data-wallet="Google Pay"><b>G</b> Pay</button>
+        <p class="nota">Simulacro: al tocar, se aprueba el pago sin pedir datos.</p>
+      </div>
+
+      <!-- ===== TRANSFERENCIA ===== -->
+      <div id="f-transferencia" class="formulario oculto">
+        <div class="datos-banco">
+          <p><small>BANCO</small><b>Banco Popular Dominicano</b></p>
+          <p><small>CUENTA</small><b>000-000000-0</b></p>
+          <p><small>A NOMBRE DE</small><b>InnovaTech SRL</b></p>
+        </div>
+        <button type="button" class="boton" id="pagar-tr">YA HICE LA TRANSFERENCIA</button>
+        <p class="nota">Simulacro: los datos de la cuenta son de ejemplo.</p>
+      </div>
+    </section>
+
+    <!-- Resumen del pedido -->
+    <aside class="resumen">
+      <h2>Resumen del pedido</h2>
+      <ul id="r-items"></ul>
+      <div class="r-linea"><span>Subtotal</span><span id="r-sub">$0</span></div>
+      <div class="r-linea"><span>Envío</span><span>Gratis</span></div>
+      <div class="r-linea total"><span>Total</span><b id="r-total">$0</b></div>
+      <p class="r-dir" id="r-dir"></p>
+    </aside>
+  </main>
+
+  <!-- ====== Factura ====== -->
+  <main class="factura-vista oculto" id="vista-factura">
+    <article class="factura" id="factura">
+      <header class="f-head">
+        <div class="f-logo">InnovaTech<sup>®</sup></div>
+        <div class="f-meta">
+          <h2>FACTURA</h2>
+          <p><small>Nº</small> <b id="f-num"></b></p>
+          <p><small>Fecha</small> <b id="f-fecha"></b></p>
+        </div>
+      </header>
+
+      <section class="f-cliente">
+        <div>
+          <small>CLIENTE</small>
+          <b id="f-nombre"></b>
+          <span id="f-cedula"></span>
+        </div>
+        <div>
+          <small>ENVIAR A</small>
+          <span id="f-direccion"></span>
+        </div>
+        <div>
+          <small>MÉTODO DE PAGO</small>
+          <span id="f-metodo"></span>
+        </div>
+      </section>
+
+      <table class="f-tabla">
+        <thead><tr><th>Producto</th><th>Cant.</th><th>Precio</th><th>Importe</th></tr></thead>
+        <tbody id="f-items"></tbody>
+      </table>
+
+      <div class="f-totales">
+        <p><span>Subtotal</span><span id="f-sub"></span></p>
+        <p><span>Envío</span><span>Gratis</span></p>
+        <p class="t"><span>TOTAL PAGADO</span><b id="f-total"></b></p>
+      </div>
+
+      <p class="f-gracias">¡Muchas gracias por confiar en nosotros!</p>
+      <p class="f-pie">Tu pedido llegará pronto. Esta factura funciona para la garantia del producto.</p>
+    </article>
+
+    <div class="f-acciones no-print">
+      <button class="boton" id="imprimir" type="button">IMPRIMIR FACTURA</button>
+      <a class="boton sec" href="tienda.html">VOLVER A LA TIENDA</a>
+    </div>
+  </main>
+
+  <script type="module" src="pago.js"></script>
+</body>
+</html>
