@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contacto | InnovaTech</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="contacto.css">
+</head>
+<body>
+
+  <!-- Luces animadas de fondo -->
+  <div class="luz luz-1"></div>
+  <div class="luz luz-2"></div>
+  <div class="luz luz-3"></div>
+
+  <nav>
+    <div class="l">
+      <a href="index.html">Tienda</a>
+      <a href="index.html#productos">Ofertas</a>
+      <a href="nosotros.html">Nosotros</a>
+      <a href="contacto.html" class="activo">Contacto</a>
+    </div>
+    <a class="logo" href="index.html">InnovaTech<sup>®</sup></a>
+    <a class="nav-cta" href="login.html">Comprar ahora</a>
+  </nav>
+
+  <main class="contacto">
+
+    <header class="cabeza">
+      <p class="tag">// Contacto</p>
+      <h1>Hablemos</h1>
+      <p class="cursiva">estamos a un mensaje</p>
+    </header>
+
+    <section class="cuerpo">
+
+      <!-- Columna izquierda: canales -->
+      <div class="canales">
+        <a class="canal" href="https://wa.me/18090000000" target="_blank" rel="noopener">
+          <small>WhatsApp</small>
+          <b>+1 809 000 0000</b>
+          <span>Respuesta rápida ↗</span>
+        </a>
+        <a class="canal" href="https://instagram.com/" target="_blank" rel="noopener">
+          <small>Instagram</small>
+          <b>@innovatech</b>
+          <span>Novedades y lanzamientos ↗</span>
+        </a>
+        <a class="canal" href="https://tiktok.com/" target="_blank" rel="noopener">
+          <small>TikTok</small>
+          <b>@innovatech</b>
+          <span>Unboxings y reseñas ↗</span>
+        </a>
+        <div class="canal fijo">
+          <small>Horario</small>
+          <b>Lun – Sáb, 09:00 – 20:00</b>
+          <span>Envíos a todo el país</span>
+        </div>
+      </div>
+
+      <!-- Columna derecha: formulario de cristal -->
+      <section class="panel">
+        <p class="etiqueta">ESCRÍBENOS</p>
+        <h2>Cuéntanos qué necesitas</h2>
+
+        <p class="aviso" id="aviso" hidden></p>
+
+        <form id="form-contacto" class="formulario" novalidate>
+          <div class="fila">
+            <label class="campo">Nombre
+              <input id="nombre" type="text" placeholder="Tu nombre" required>
+            </label>
+            <label class="campo">Correo
+              <input id="correo" type="email" placeholder="tucorreo@ejemplo.com" required>
+            </label>
+          </div>
+
+          <label class="campo">Asunto
+            <select id="asunto" required>
+              <option value="">Elige una opción</option>
+              <option value="Consulta de producto">Consulta de producto</option>
+              <option value="Mi pedido">Mi pedido</option>
+              <option value="Garantía o soporte">Garantía o soporte</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </label>
+
+          <label class="campo">Mensaje
+            <textarea id="mensaje" rows="5" maxlength="600" placeholder="Escribe tu mensaje aquí" required></textarea>
+          </label>
+
+          <p class="error" id="error" hidden></p>
+          <button class="boton" id="enviar" type="submit">ENVIAR MENSAJE</button>
+        </form>
+      </section>
+    </section>
+
+    <!-- Preguntas rápidas -->
+    <section class="faq">
+      <p class="tag">// Preguntas rápidas</p>
+      <div class="faq-grid">
+        <details>
+          <summary>¿Los productos son originales?</summary>
+          <p>Sí. Trabajamos solo con productos auténticos y con garantía.</p>
+        </details>
+        <details>
+          <summary>¿Hacen envíos a todo el país?</summary>
+          <p>Sí, y en muchos productos el envío es gratis.</p>
+        </details>
+        <details>
+          <summary>¿Qué métodos de pago aceptan?</summary>
+          <p>Tarjeta, pago electrónico y transferencia bancaria.</p>
+        </details>
+      </div>
+    </section>
+
+    <footer class="cierre">
+      <span>¿Listo para tu próximo dispositivo?</span>
+      <a href="login.html">Ver productos ↗</a>
+    </footer>
+  </main>
+
+  <script type="module" src="contacto.js"></script>
+</body>
+</html>
