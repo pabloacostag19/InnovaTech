@@ -22,6 +22,10 @@ $("#tipo").addEventListener("change", (e) => {
   $("#num-apto").required = v === "apartamento";
 });
 
+// La cédula: solo números y máximo 11
+$("#cedula").addEventListener("input", (e) => {
+  e.target.value = e.target.value.replace(/\D/g, "").slice(0, 11);
+});
 function mostrarError(texto) {
   error.textContent = texto;
   error.hidden = false;
@@ -55,8 +59,13 @@ onAuthStateChanged(auth, async (usuario) => {
 // Guarda la dirección
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  error.hidden = true;
+   error.hidden = true;
   if (!uid) return;
+
+  if ($("#cedula").value.trim().length !== 11) {
+    mostrarError("La cédula debe tener exactamente 11 dígitos.");
+    return;
+  }
 
   const tipo = $("#tipo").value;
   const direccion = {
