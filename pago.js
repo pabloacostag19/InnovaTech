@@ -1,7 +1,6 @@
 import { auth, db } from "./firebase.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
-import { doc, getDoc } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
-
+import { doc, getDoc, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
 const $ = (s) => document.querySelector(s);
 const money = (n) => "$" + n.toLocaleString("en-US");
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -27,11 +26,31 @@ const PRODUCTOS = {
   ar4: ["Protector de pantalla para reloj", 10], ar5: ["Base de carga para reloj", 18], ar6: ["Funda protectora para reloj", 15]
 };
 
+const FOTOS = {
+  c1:'imágenes/tienda/img1.png', c2:'imágenes/tienda/img2.png', c3:'imágenes/tienda/img7.png',
+  c4:'imágenes/tienda/img8.png', c5:'imágenes/tienda/img9.png', c6:'imágenes/tienda/img10.png',
+  t1:'imágenes/tienda/img11.png', t2:'imágenes/tienda/img12.png', t3:'imágenes/tienda/img13.png',
+  t4:'imágenes/tienda/img14.png', t5:'imágenes/tienda/img15.png', t6:'imágenes/tienda/img16.png',
+  l1:'imágenes/tienda/img3.png', l2:'imágenes/tienda/img4.png', l3:'imágenes/tienda/img17.png',
+  l4:'imágenes/tienda/img18.png', l5:'imágenes/tienda/img19.png', l6:'imágenes/tienda/img20.png',
+  a1:'imágenes/tienda/img5.png', a2:'imágenes/tienda/img21.png', a3:'imágenes/tienda/img26.png',
+  a4:'imágenes/tienda/img23.png', a5:'imágenes/tienda/img24.png', a6:'imágenes/tienda/img25.png',
+  r1:'imágenes/tienda/img6.png', r2:'imágenes/tienda/img27.png', r3:'imágenes/tienda/img28.png',
+  r4:'imágenes/tienda/img29.png', r5:'imágenes/tienda/img30.png', r6:'imágenes/tienda/img31.png',
+  ac1:'imágenes/tienda/imgg1.png', ac2:'imágenes/tienda/imgg2.png', ac3:'imágenes/tienda/imgg3.png',
+  ac4:'imágenes/tienda/imgg4.png', ac5:'imágenes/tienda/imgg5.png', ac6:'imágenes/tienda/imgg6.png',
+  aa1:'imágenes/tienda/imgg7.png', aa2:'imágenes/tienda/imgg8.png', aa3:'imágenes/tienda/imgg9.png',
+  aa4:'imágenes/tienda/imgg10.png', aa5:'imágenes/tienda/imgg11.png', aa6:'imágenes/tienda/imgg12.png',
+  ar1:'imágenes/tienda/imgg13.png', ar2:'imágenes/tienda/imgg14.png', ar3:'imágenes/tienda/imgg15.png',
+  ar4:'imágenes/tienda/imgg16.png', ar5:'imágenes/tienda/imgg17.png', ar6:'imágenes/tienda/imgg18.png'
+};
+
 /* ---------- Carrito (guardado por tienda.js en el navegador) ---------- */
 let cart = {};
 try { cart = JSON.parse(localStorage.getItem("it_cart")) || {}; } catch { cart = {}; }
 const items = Object.keys(cart).filter((id) => PRODUCTOS[id]).map((id) => ({
-  id, nombre: PRODUCTOS[id][0], precio: PRODUCTOS[id][1], cant: cart[id], importe: PRODUCTOS[id][1] * cart[id]
+  id, nombre: PRODUCTOS[id][0], precio: PRODUCTOS[id][1], cant: cart[id], importe: PRODUCTOS[id][1] * cart[id],
+  imagen: FOTOS[id] || ""
 }));
 const total = items.reduce((s, i) => s + i.importe, 0);
 
@@ -45,8 +64,7 @@ $("#r-sub").textContent = money(total);
 $("#r-total").textContent = money(total);
 
 /* ---------- Datos del cliente (desde Firestore) ---------- */
-let cliente = { nombre: "", cedula: "", direccion: "" };
-
+let cliente = { uid: "", correo: "", nombre: "", cedula: "", direccion: "" };
 function textoDireccion(d) {
   const vivienda = d.tipoVivienda === "apartamento"
     ? `Apto. ${d.numeroApartamento}${d.piso ? ", piso " + d.piso : ""}${d.edificio ? ", " + d.edificio : ""}`
@@ -64,7 +82,7 @@ onAuthStateChanged(auth, async (usuario) => {
     if (!datos.direccionCompleta || !datos.direccion) { window.location.href = "envio.html"; return; }
 
     const d = datos.direccion;
-    cliente = { nombre: d.nombreCompleto, cedula: d.cedula, direccion: textoDireccion(d) };
+ cliente = { uid: usuario.uid, correo: usuario.email, nombre: d.nombreCompleto, cedula: d.cedula, direccion: textoDireccion(d) };
     $("#r-dir").textContent = "Envío a: " + cliente.direccion;
     $("#titular").value = (d.nombreCompleto || "").toUpperCase();
     $("#t-nom").textContent = $("#titular").value || "NOMBRE APELLIDO";
@@ -220,12 +238,37 @@ $("#pagar-tr").addEventListener("click", () => {
   pagar("Transferencia bancaria", $("#pagar-tr"), "YA HICE LA TRANSFERENCIA");
 });
 
+/* ---------- Guardar el pedido en Firestore ---------- */
+async function guardarPedido(numeroFactura, textoMetodo) {
+  try {
+    await addDoc(collection(db, "pedidos"), {
+      uid: cliente.uid,
+      correo: cliente.correo,
+      factura: numeroFactura,
+      productos: items.map((i) => ({
+        nombre: i.nombre,
+        precio: i.precio,
+        cantidad: i.cant,
+        importe: i.importe,
+        imagen: i.imagen
+      })),
+      total: total,
+      metodoPago: textoMetodo,
+      direccionEnvio: cliente.direccion,
+      fecha: serverTimestamp()
+    });
+  } catch (e) {
+    console.error("No se pudo guardar el pedido:", e);
+  }
+}
+
 /* ---------- Factura ---------- */
 function mostrarFactura(textoMetodo) {
   const ahora = new Date();
   const numero = "IT-" + ahora.getFullYear() + "-" + String(Math.floor(Math.random() * 900000) + 100000);
 
   $("#f-num").textContent = numero;
+  guardarPedido(numero, textoMetodo);
   $("#f-fecha").textContent = ahora.toLocaleDateString("es-DO", { day: "2-digit", month: "long", year: "numeric" })
     + ", " + ahora.toLocaleTimeString("es-DO", { hour: "2-digit", minute: "2-digit" });
   $("#f-nombre").textContent = cliente.nombre;
