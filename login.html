@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar sesión | InnovaTech</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+  <!-- Luces animadas de fondo -->
+  <div class="luz luz-1"></div>
+  <div class="luz luz-2"></div>
+  <div class="luz luz-3"></div>
+
+  <a class="volver" href="index.html">← Volver</a>
+
+  <main class="login">
+    <section class="panel">
+      <p class="etiqueta">// BIENVENIDO</p>
+      <h1>INICIA<br>SESIÓN</h1>
+      <p class="cursiva">el futuro es hoy</p>
+
+      <!-- FORMULARIO DE LOGIN -->
+      <form id="form-login" class="formulario">
+        <label class="campo">
+          <span>Correo electrónico</span>
+          <input type="email" id="correo" placeholder="tucorreo@ejemplo.com" required>
+        </label>
+
+        <label class="campo">
+          <span>Contraseña</span>
+          <input type="password" id="contrasena" placeholder="••••••••" minlength="6" required>
+        </label>
+
+        <button type="submit" class="boton">ENTRAR</button>
+      </form>
+
+      <!-- FORMULARIO DE REGISTRO (oculto al inicio) -->
+<form id="form-registro" class="formulario oculto">
+
+  <div class="fila">
+    <label class="campo">
+      <span>Nombre</span>
+      <input type="text" id="nombre-reg" placeholder="Tu nombre" required>
+    </label>
+    <label class="campo">
+      <span>Apellido</span>
+      <input type="text" id="apellido-reg" placeholder="Tu apellido" required>
+    </label>
+  </div>
+
+  <label class="campo">
+    <span>Número de teléfono</span>
+    <input type="tel" id="telefono-reg" placeholder="809-000-0000" required>
+  </label>
+
+  <label class="campo">
+    <span>Correo electrónico</span>
+    <input type="email" id="correo-reg" placeholder="tucorreo@ejemplo.com" required>
+  </label>
+
+  <label class="campo">
+    <span>Crea una contraseña (mínimo 6 caracteres)</span>
+    <input type="password" id="contrasena-reg" placeholder="••••••••" minlength="6" required>
+  </label>
+
+  <button type="submit" class="boton">CREAR CUENTA</button>
+</form>
+
+      <p class="cambio" id="texto-cambio">
+        ¿Aún no tienes una cuenta? <a href="#" id="ir-registro">Regístrate</a>
+      </p>
+      <p class="cambio oculto" id="texto-cambio-login">
+        ¿Ya tienes una cuenta? <a href="#" id="ir-login">Inicia sesión</a>
+      </p>
+    </section>
+  </main>
+
+  <script type="module" src="login.js"></script>
+</body>
+</html>

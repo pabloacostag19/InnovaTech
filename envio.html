@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>InnovaTech | Datos de envío</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Great+Vibes&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="envio.css">
+</head>
+<body>
+<div class="luz luz-1"></div>
+<div class="luz luz-2"></div>
+<div class="luz luz-3"></div>
+
+<a class="volver" href="tienda.html"> Volver a la tienda</a>
+
+<main class="envio">
+  <section class="panel">
+    <p class="etiqueta"> DATOS DE ENVÍO</p>
+    <h1>Dónde te lo enviamos?</h1>
+    <p class="cursiva">el futuro es hoy</p>
+    <p class="aviso" id="aviso" hidden></p>
+
+    <form id="form-envio" class="formulario">
+      <div class="fila">
+        <label class="campo">Nombre completo
+          <input id="nombre" type="text" placeholder="Nombre y apellidos" required>
+        </label>
+        <label class="campo">Cédula
+          <input id="cedula" type="text" inputmode="numeric" maxlength="11" placeholder="000-0000000-0" required>
+        </label>
+      </div>
+
+      <div class="fila">
+        <label class="campo">Calle y número
+          <input id="calle" type="text" placeholder="Ej: Calle Duarte #15" required>
+        </label>
+        <label class="campo">Sector
+          <input id="sector" type="text" placeholder="Tu sector o barrio" required>
+        </label>
+      </div>
+
+      <label class="campo">Tipo de vivienda
+        <select id="tipo" required>
+          <option value="">Elige una opción</option>
+          <option value="casa">Casa</option>
+          <option value="apartamento">Apartamento</option>
+        </select>
+      </label>
+
+      <div id="bloque-casa" class="oculto">
+        <label class="campo">Número de casa
+          <input id="num-casa" type="text" placeholder="Ej: 12">
+        </label>
+      </div>
+
+      <div id="bloque-apto" class="oculto">
+        <div class="fila">
+          <label class="campo">Número de apartamento
+            <input id="num-apto" type="text" placeholder="Ej: 3B">
+          </label>
+          <label class="campo">Piso
+            <input id="piso" type="text" placeholder="Ej: 3">
+          </label>
+        </div>
+        <label class="campo">Nombre del edificio
+          <input id="edificio" type="text" placeholder="Opcional">
+        </label>
+      </div>
+
+      <div class="fila">
+        <label class="campo">Ciudad
+          <input id="ciudad" type="text" placeholder="Tu ciudad" required>
+        </label>
+        <label class="campo">Código postal
+          <input id="postal" type="text" inputmode="numeric" placeholder="Ej: 10101" required>
+        </label>
+      </div>
+
+      <label class="campo">Referencia
+        <input id="referencia" type="text" placeholder="Opcional: frente al colmado, portón negro...">
+      </label>
+
+      <p class="error" id="error" hidden></p>
+      <button class="boton" id="guardar" type="submit">GUARDAR Y CONTINUAR</button>
+    </form>
+  </section>
+</main>
+
+<script type="module" src="envio.js"></script>
+</body>
+</html>
