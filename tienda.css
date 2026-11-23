@@ -34,13 +34,14 @@
 :root {
   box-sizing: border-box;
   color-scheme: light dark;
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: var(--bg);
 }
 /* Desplazamiento suave y margen para la barra fija */
 html {
   scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 84px);
   scroll-behavior: smooth;
+  background: var(--bg);
+  min-height: 100%;
 }
 /* Reset: todo con box-sizing uniforme y sin márgenes */
 * {
@@ -52,6 +53,7 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: Inter, system-ui, sans-serif;
+  min-height: 100vh;
 }
 /* Franja que cubre la zona segura superior en móviles */
 body::before {
@@ -720,8 +722,10 @@ button {
 
 .df .btn {
   display: block;
+  width: 100%;
   text-align: center;
   padding: 13px;
+  font-size: 14px;
 }
 /* Cuadro de diálogo */
 dialog {
