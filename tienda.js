@@ -122,7 +122,7 @@ const store = {
   get:(k,d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d } catch { return d } },
   set:(k,v) => { try { localStorage.setItem(k, JSON.stringify(v)) } catch {} }
 };
-let cart = store.get('it_cart', {}), user = null, cat = null, term = '';
+let cart = store.get('it_cart', {}), user = null, uid = null, cat = null, term = '';
 
 
 /* ---------- Tienda ---------- */
@@ -164,9 +164,36 @@ function renderCart() {
   $('#cartN').textContent = n; $('#cartN').hidden = !n;
   $('#items').innerHTML = ids.length ? ids.map(id => { const p = byId[id]; return `<li><span class="th">${FOTOS[id] ? `<img src="${FOTOS[id]}" alt="">` : p.e}</span><div><b>${p.n}</b><small>${money(p.p)}</small><div class="qty"><button data-q="${id}" data-d="-1" aria-label="Quitar uno">−</button><span>${cart[id]}</span><button data-q="${id}" data-d="1" aria-label="Agregar uno">+</button></div></div><button class="x" data-q="${id}" data-d="-999" aria-label="Eliminar">×</button></li>`; }).join('') : '<li class="empty">Tu carrito está vacío.</li>';
   $('#total').textContent = money(total);
-  const msg = 'Hola InnovaTech, quiero comprar:\n' + ids.map(id => `• ${cart[id]} × ${byId[id].n} (${money(byId[id].p * cart[id])})`).join('\n') + `\nTotal: ${money(total)}`;
-  const w = $('#checkout'); w.href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`; w.style.display = n ? '' : 'none';
+   const w = $('#checkout');
+  w.style.display = n ? '' : 'none';
 }
+
+async function irAPagar() {
+  const ids = Object.keys(cart).filter(id => byId[id]);
+  if (!ids.length || !uid) return;
+
+  const btn = $('#checkout');
+  btn.disabled = true;
+  btn.textContent = 'Un momento...';
+
+  try {
+    const snap = await getDoc(doc(db, 'usuarios', uid));
+    const datos = snap.exists() ? snap.data() : {};
+
+    if (datos.direccionCompleta) {
+      // Ya tiene dirección: directo al pago con tarjeta
+      window.location.href = 'pago.html';
+    } else {
+      // No tiene dirección: formulario de envío
+      window.location.href = 'envio.html';
+    }
+  } catch (e) {
+    alert('No pudimos verificar tus datos. Intenta de nuevo.');
+    btn.disabled = false;
+    btn.textContent = 'Ir a pagar';
+  }
+}
+
 
 /* ---------- Cuenta (sesión real con Firebase) ---------- */
 function renderUser() {
@@ -193,6 +220,7 @@ onAuthStateChanged(auth, async (usuario) => {
     window.location.href = 'login.html';
     return;
   }
+  uid = usuario.uid;
   try {
     const snap = await getDoc(doc(db, 'usuarios', usuario.uid));
     user = snap.exists() ? snap.data().nombre : usuario.email.split('@')[0];
@@ -225,6 +253,7 @@ document.addEventListener('click', e => {
   else if (g('[data-next]')) go(si + 1);
   else if (g('[data-scroll]')) $('#cats').scrollBy({left:320, behavior:'smooth'});
   else if (g('#cartBtn')) openCart();
+  else if (g('#checkout')) irAPagar();
   else if (g('[data-closecart]')) closeCart();
   else if (g('#userBtn')) openLogin();
   else if (g('[data-close]')) $('#login').close();
