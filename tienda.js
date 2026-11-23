@@ -6,9 +6,10 @@ const WHATSAPP = '18090000000'; // ← cambia por tu número, con código de pa�
 
 const CATS = [
   ['celulares','Celulares','📱'],['tablets','Tablets','📋'],['laptops','Laptops','💻'],['audifonos','Audífonos','🎧'],
-  ['relojes','Relojes','⌚'],['acc-celular','Accesorios para celulares','🔌'],['acc-audifonos','Accesorios para audífonos','🎶'],['acc-reloj','Accesorios para relojes','⏱️']
+  ['relojes','Relojes','⌚'],['acc-celular','Accesorios para celulares','🔌'],['acc-audifonos','Accesorios para audífonos','🎶'],['acc-reloj','Accesorios para relojes','⏱']
 ];
-// [id, nombre, categoría, precio, emoji, recomendado(1/0)]  — agrega p.i = 'img/foto.png' para usar una foto real
+
+// [id, nombre, categoría, precio, emoji, recomendado(1/0)]
 const P = [
   ['c1','iPhone 18 Pro Max Glaciar 256 GB','celulares',1199,'📱',1],
   ['c2','iPhone 18 Pro Max Borgoña 256 GB','celulares',1299,'📱',1],
@@ -52,67 +53,35 @@ const P = [
   ['aa4','Cable de audio 3.5 mm','acc-audifonos',10,'🎶',0],
   ['aa5','Soporte para audífonos','acc-audifonos',22,'🎶',0],
   ['aa6','Adaptador Bluetooth','acc-audifonos',20,'🎶',0],
-  ['ar1','Correa deportiva para reloj','acc-reloj',25,'⏱️',0],
-  ['ar2','Cargador magnético para reloj','acc-reloj',29,'⏱️',0],
-  ['ar3','Correa de silicona para Apple Watch','acc-reloj',20,'⏱️',0],
-  ['ar4','Protector de pantalla para reloj','acc-reloj',10,'⏱️',0],
-  ['ar5','Base de carga para reloj','acc-reloj',18,'⏱️',0],
-  ['ar6','Funda protectora para reloj','acc-reloj',15,'⏱️',0]
+  ['ar1','Correa deportiva para reloj','acc-reloj',25,'⏱',0],
+  ['ar2','Cargador magnético para reloj','acc-reloj',29,'⏱',0],
+  ['ar3','Correa de silicona para Apple Watch','acc-reloj',20,'⏱',0],
+  ['ar4','Protector de pantalla para reloj','acc-reloj',10,'⏱',0],
+  ['ar5','Base de carga para reloj','acc-reloj',18,'⏱',0],
+  ['ar6','Funda protectora para reloj','acc-reloj',15,'⏱',0]
 ].map(([id,n,c,p,e,r]) => ({id,n,c,p,e,r}));
+
 const byId = Object.fromEntries(P.map(p => [p.id,p]));
 const catName = id => (CATS.find(c => c[0] === id) || [])[1];
 
-// Fotos reales para la fila "InnovaTech recomienda"
+// Fotos reales de los productos
 const FOTOS = {
-  c1:'imágenes/tienda/img1.png', // iPhone Glaciar
-  c2:'imágenes/tienda/img2.png', // iPhone Borgoña
-  c3:'imágenes/tienda/img7.png', // iPhone 17
-  c4:'imágenes/tienda/img8.png', //iPhone Duo
-  c5:'imágenes/tienda/img9.png', //iPhone 17 Pro Max
-  c6:'imágenes/tienda/img10.png', //iPhone 15 Pro Max
-  t1:'imágenes/tienda/img11.png', //iPad Air 11
-  t2:'imágenes/tienda/img12.png', //iPad 10.ª generación
-  t3:'imágenes/tienda/img13.png', //Samsung Galaxy Tab S9
-  t4:'imágenes/tienda/img14.png', //iPad Pro 11" M4
-  t5:'imágenes/tienda/img15.png', //Xiaomi Pad 6
-  t6:'imágenes/tienda/img16.png', //Xiaomi Smart Band 8
-  l1:'imágenes/tienda/img3.png', // MacBook Air
-  l2:'imágenes/tienda/img4.png', // Laptop HP
-  l3:'imágenes/tienda/img17.png', // 
-  l4:'imágenes/tienda/img18.png', // 
-  l5:'imágenes/tienda/img19.png', //
-  l6:'imágenes/tienda/img20.png', //
-  a1:'imágenes/tienda/img5.png', // AirPods Pro 2
-  a2:'imágenes/tienda/img21.png', 
-  a3:'imágenes/tienda/img26.png', 
-  a4:'imágenes/tienda/img23.png',
-  a5:'imágenes/tienda/img24.png', 
-  a6:'imágenes/tienda/img25.png', 
-  r1:'imágenes/tienda/img6.png', 
-  r2:'imágenes/tienda/img27.png',
-  r3:'imágenes/tienda/img28.png',
-  r4:'imágenes/tienda/img29.png',
-  r5:'imágenes/tienda/img30.png',
-  r6:'imágenes/tienda/img31.png',
-  ac1:'imágenes/tienda/imgg1.png',
-  ac2:'imágenes/tienda/imgg2.png',
-  ac3:'imágenes/tienda/imgg3.png',
-  ac4:'imágenes/tienda/imgg4.png',
-  ac5:'imágenes/tienda/imgg5.png',
-  ac6:'imágenes/tienda/imgg6.png',
-  aa1: 'imágenes/tienda/imgg7.png',
-  aa2: 'imágenes/tienda/imgg8.png',
-  aa3: 'imágenes/tienda/imgg9.png',
-  aa4: 'imágenes/tienda/imgg10.png',
-  aa5: 'imágenes/tienda/imgg11.png',
-  aa6: 'imágenes/tienda/imgg12.png',
-  ar1: 'imágenes/tienda/imgg13.png',
-  ar2: 'imágenes/tienda/imgg14.png',
-  ar3: 'imágenes/tienda/imgg15.png',
-  ar4: 'imágenes/tienda/imgg16.png',
-  ar5: 'imágenes/tienda/imgg17.png',
-  ar6: 'imágenes/tienda/imgg18.png',
-  
+  c1:'imágenes/tienda/img1.png', c2:'imágenes/tienda/img2.png', c3:'imágenes/tienda/img7.png',
+  c4:'imágenes/tienda/img8.png', c5:'imágenes/tienda/img9.png', c6:'imágenes/tienda/img10.png',
+  t1:'imágenes/tienda/img11.png', t2:'imágenes/tienda/img12.png', t3:'imágenes/tienda/img13.png',
+  t4:'imágenes/tienda/img14.png', t5:'imágenes/tienda/img15.png', t6:'imágenes/tienda/img16.png',
+  l1:'imágenes/tienda/img3.png', l2:'imágenes/tienda/img4.png', l3:'imágenes/tienda/img17.png',
+  l4:'imágenes/tienda/img18.png', l5:'imágenes/tienda/img19.png', l6:'imágenes/tienda/img20.png',
+  a1:'imágenes/tienda/img5.png', a2:'imágenes/tienda/img21.png', a3:'imágenes/tienda/img26.png',
+  a4:'imágenes/tienda/img23.png', a5:'imágenes/tienda/img24.png', a6:'imágenes/tienda/img25.png',
+  r1:'imágenes/tienda/img6.png', r2:'imágenes/tienda/img27.png', r3:'imágenes/tienda/img28.png',
+  r4:'imágenes/tienda/img29.png', r5:'imágenes/tienda/img30.png', r6:'imágenes/tienda/img31.png',
+  ac1:'imágenes/tienda/imgg1.png', ac2:'imágenes/tienda/imgg2.png', ac3:'imágenes/tienda/imgg3.png',
+  ac4:'imágenes/tienda/imgg4.png', ac5:'imágenes/tienda/imgg5.png', ac6:'imágenes/tienda/imgg6.png',
+  aa1:'imágenes/tienda/imgg7.png', aa2:'imágenes/tienda/imgg8.png', aa3:'imágenes/tienda/imgg9.png',
+  aa4:'imágenes/tienda/imgg10.png', aa5:'imágenes/tienda/imgg11.png', aa6:'imágenes/tienda/imgg12.png',
+  ar1:'imágenes/tienda/imgg13.png', ar2:'imágenes/tienda/imgg14.png', ar3:'imágenes/tienda/imgg15.png',
+  ar4:'imágenes/tienda/imgg16.png', ar5:'imágenes/tienda/imgg17.png', ar6:'imágenes/tienda/imgg18.png'
 };
 
 const $ = s => document.querySelector(s);
@@ -122,11 +91,13 @@ const store = {
   get:(k,d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d } catch { return d } },
   set:(k,v) => { try { localStorage.setItem(k, JSON.stringify(v)) } catch {} }
 };
-let cart = store.get('it_cart', {}), user = null, uid = null, cat = null, term = '';
 
+// uid es el identificador del usuario con sesión (esta variable faltaba)
+let cart = {}, user = null, cat = null, term = '', claveCarrito = null, uid = null;
 
 /* ---------- Tienda ---------- */
 const card = p => `<article class="card"><div class="im">${FOTOS[p.id] ? `<img src="${FOTOS[p.id]}" alt="">` : `<span>${p.e}</span>`}</div><h3>${p.n}</h3><div class="pr">${money(p.p)}</div><div class="chips"><em>Entrega rápida</em><em class="g">Envío gratis</em></div><button class="add" data-add="${p.id}">Agregar al carrito</button></article>`;
+
 const sec = (t,l,c) => `<section class="blk"><div class="bh"><h2>${t}</h2>${c ? `<button class="lnk" data-cat="${c}">Ver todo ›</button>` : ''}</div><div class="row">${l.map(card).join('')}</div></section>`;
 
 function renderShop() {
@@ -139,21 +110,27 @@ function renderShop() {
     shop.innerHTML = sec('InnovaTech recomienda ✨', P.filter(p => p.r).map(p => ({...p, i: FOTOS[p.id]}))) + CATS.map(([id,n]) => sec(n, P.filter(p => p.c === id), id)).join('');
   }
 }
+
 function renderCats() {
   $('#cats').innerHTML = CATS.map(([id,n,e]) => `<button class="cat${cat === id ? ' on' : ''}" data-cat="${id}"><span>${e}</span>${n}</button>`).join('');
 }
+
 function setCat(c) {
-  cat = (cat === c) ? null : c; term = ''; $('#q').value = '';
-  renderShop(); renderCats();
+  cat = (cat === c) ? null : c;
+  term = '';
+  $('#q').value = '';
+  renderShop();
+  renderCats();
   if (cat) $('#cats').scrollIntoView({behavior:'smooth'});
 }
+
 $('#q').addEventListener('input', e => { term = e.target.value.trim().toLowerCase(); cat = null; renderShop(); renderCats(); });
 $('#sf').addEventListener('submit', e => { e.preventDefault(); $('#cats').scrollIntoView({behavior:'smooth'}); });
 
 /* ---------- Carrito ---------- */
 function openCart()  { $('#drawer').classList.add('open'); $('#ov').classList.add('on'); }
 function closeCart() { $('#drawer').classList.remove('open'); $('#ov').classList.remove('on'); }
-function saveCart()  { store.set('it_cart', cart); renderCart(); }
+function saveCart()  { if (claveCarrito) store.set(claveCarrito, cart); renderCart(); }
 function add(id)     { cart[id] = (cart[id] || 0) + 1; saveCart(); openCart(); }
 function setQty(id,d){ cart[id] = (cart[id] || 0) + d; if (cart[id] <= 0) delete cart[id]; saveCart(); }
 
@@ -162,24 +139,24 @@ function renderCart() {
   const n = ids.reduce((s,id) => s + cart[id], 0);
   const total = ids.reduce((s,id) => s + cart[id] * byId[id].p, 0);
   $('#cartN').textContent = n; $('#cartN').hidden = !n;
-  $('#items').innerHTML = ids.length ? ids.map(id => { const p = byId[id]; return `<li><span class="th">${FOTOS[id] ? `<img src="${FOTOS[id]}" alt="">` : p.e}</span><div><b>${p.n}</b><small>${money(p.p)}</small><div class="qty"><button data-q="${id}" data-d="-1" aria-label="Quitar uno">−</button><span>${cart[id]}</span><button data-q="${id}" data-d="1" aria-label="Agregar uno">+</button></div></div><button class="x" data-q="${id}" data-d="-999" aria-label="Eliminar">×</button></li>`; }).join('') : '<li class="empty">Tu carrito está vacío.</li>';
+  $('#items').innerHTML = ids.length ? ids.map(id => {
+    const p = byId[id];
+    return `<li><span class="th">${FOTOS[id] ? `<img src="${FOTOS[id]}" alt="">` : p.e}</span><div><b>${p.n}</b><small>${money(p.p)}</small><div class="qty"><button data-q="${id}" data-d="-1" aria-label="Quitar uno">−</button><span>${cart[id]}</span><button data-q="${id}" data-d="1" aria-label="Agregar uno">+</button></div></div><button class="x" data-q="${id}" data-d="-999" aria-label="Eliminar">×</button></li>`;
+  }).join('') : '<li class="empty">Tu carrito está vacío.</li>';
   $('#total').textContent = money(total);
-   const w = $('#checkout');
+  const w = $('#checkout');
   w.style.display = n ? '' : 'none';
 }
 
 async function irAPagar() {
   const ids = Object.keys(cart).filter(id => byId[id]);
   if (!ids.length || !uid) return;
-
   const btn = $('#checkout');
   btn.disabled = true;
   btn.textContent = 'Un momento...';
-
   try {
     const snap = await getDoc(doc(db, 'usuarios', uid));
     const datos = snap.exists() ? snap.data() : {};
-
     if (datos.direccionCompleta) {
       // Ya tiene dirección: directo al pago con tarjeta
       window.location.href = 'pago.html';
@@ -194,7 +171,6 @@ async function irAPagar() {
   }
 }
 
-
 /* ---------- Cuenta (sesión real con Firebase) ---------- */
 function renderUser() {
   $('#userBtn').title = user ? user : 'Cuenta';
@@ -206,7 +182,6 @@ function openLogin() {
   d.innerHTML = '<h3>Hola, <span id="un"></span></h3><small>Sesión iniciada en InnovaTech.</small><button class="btn" data-out>Cerrar sesión</button> <button class="lnk" data-close>Cerrar</button>';
   $('#un').textContent = user || '';
   d.showModal();
-
   const o = d.querySelector('[data-out]');
   if (o) o.onclick = async () => {
     await signOut(auth);
@@ -216,11 +191,13 @@ function openLogin() {
 
 // Proteger la tienda: solo entra quien tenga sesión
 onAuthStateChanged(auth, async (usuario) => {
-  if (!usuario) {
-    window.location.href = 'login.html';
-    return;
-  }
+  if (!usuario) { window.location.href = 'login.html'; return; }
+  // Cada usuario tiene su propio carrito
   uid = usuario.uid;
+  claveCarrito = 'it_cart_' + usuario.uid;
+  cart = store.get(claveCarrito, {});
+  localStorage.removeItem('it_cart');
+  renderCart();
   try {
     const snap = await getDoc(doc(db, 'usuarios', usuario.uid));
     user = snap.exists() ? snap.data().nombre : usuario.email.split('@')[0];
@@ -238,12 +215,14 @@ function go(i) {
   si = (i + sl.length) % sl.length;
   sl.forEach((s,k) => s.classList.toggle('on', k === si));
   [...dots.children].forEach((d,k) => d.classList.toggle('on', k === si));
-  clearInterval(timer); timer = setInterval(() => go(si + 1), 5500);
+  clearInterval(timer);
+  timer = setInterval(() => go(si + 1), 5500);
 }
 
 /* ---------- Clics ---------- */
 document.addEventListener('click', e => {
-  const g = s => e.target.closest(s); let t;
+  const g = s => e.target.closest(s);
+  let t;
   if (t = g('[data-add]')) add(t.dataset.add);
   else if (t = g('[data-q]')) setQty(t.dataset.q, +t.dataset.d);
   else if (t = g('[data-cat]')) setCat(t.dataset.cat);
@@ -260,4 +239,5 @@ document.addEventListener('click', e => {
 });
 
 $('#wa').href = `https://wa.me/${WHATSAPP}`;
+
 renderShop(); renderCats(); renderCart(); renderUser(); go(0);
