@@ -1,6 +1,7 @@
 import { auth, db } from "./firebase.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
 import { doc, getDoc, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
+
 const $ = (s) => document.querySelector(s);
 const money = (n) => "$" + n.toLocaleString("en-US");
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -45,26 +46,37 @@ const FOTOS = {
   ar4:'imágenes/tienda/imgg16.png', ar5:'imágenes/tienda/imgg17.png', ar6:'imágenes/tienda/imgg18.png'
 };
 
-/* ---------- Carrito (guardado por tienda.js en el navegador) ---------- */
+/* ---------- Carrito: se arma cuando Firebase confirma quién es el usuario ---------- */
 let cart = {};
-try { cart = JSON.parse(localStorage.getItem("it_cart")) || {}; } catch { cart = {}; }
-const items = Object.keys(cart).filter((id) => PRODUCTOS[id]).map((id) => ({
-  id, nombre: PRODUCTOS[id][0], precio: PRODUCTOS[id][1], cant: cart[id], importe: PRODUCTOS[id][1] * cart[id],
-  imagen: FOTOS[id] || ""
-}));
-const total = items.reduce((s, i) => s + i.importe, 0);
+let claveCarrito = null;
+let items = [];
+let total = 0;
 
-if (!items.length) window.location.href = "tienda.html";
+function armarPedido(uid) {
+  claveCarrito = "it_cart_" + uid;
+  try { cart = JSON.parse(localStorage.getItem(claveCarrito)) || {}; } catch { cart = {}; }
 
-/* ---------- Resumen del pedido ---------- */
-$("#r-items").innerHTML = items.map((i) =>
-  `<li><span class="th">🛍️</span><div>${esc(i.nombre)}<small>Cant. ${i.cant}</small></div><b>${money(i.importe)}</b></li>`
-).join("");
-$("#r-sub").textContent = money(total);
-$("#r-total").textContent = money(total);
+  items = Object.keys(cart).filter((id) => PRODUCTOS[id]).map((id) => ({
+    id, nombre: PRODUCTOS[id][0], precio: PRODUCTOS[id][1], cant: cart[id], importe: PRODUCTOS[id][1] * cart[id],
+    imagen: FOTOS[id] || ""
+  }));
+  total = items.reduce((s, i) => s + i.importe, 0);
+
+  // Sin productos en el carrito de este usuario, vuelve a la tienda
+  if (!items.length) { window.location.href = "tienda.html"; return false; }
+
+  /* ---------- Resumen del pedido ---------- */
+  $("#r-items").innerHTML = items.map((i) =>
+    `<li><span class="th">🛍️</span><div>${esc(i.nombre)}<small>Cant. ${i.cant}</small></div><b>${money(i.importe)}</b></li>`
+  ).join("");
+  $("#r-sub").textContent = money(total);
+  $("#r-total").textContent = money(total);
+  return true;
+}
 
 /* ---------- Datos del cliente (desde Firestore) ---------- */
 let cliente = { uid: "", correo: "", nombre: "", cedula: "", direccion: "" };
+
 function textoDireccion(d) {
   const vivienda = d.tipoVivienda === "apartamento"
     ? `Apto. ${d.numeroApartamento}${d.piso ? ", piso " + d.piso : ""}${d.edificio ? ", " + d.edificio : ""}`
@@ -74,6 +86,10 @@ function textoDireccion(d) {
 
 onAuthStateChanged(auth, async (usuario) => {
   if (!usuario) { window.location.href = "login.html"; return; }
+
+  // Primero el carrito de ESTE usuario. Si está vacío, se va a la tienda.
+  if (!armarPedido(usuario.uid)) return;
+
   try {
     const snap = await getDoc(doc(db, "usuarios", usuario.uid));
     const datos = snap.exists() ? snap.data() : {};
@@ -82,7 +98,7 @@ onAuthStateChanged(auth, async (usuario) => {
     if (!datos.direccionCompleta || !datos.direccion) { window.location.href = "envio.html"; return; }
 
     const d = datos.direccion;
- cliente = { uid: usuario.uid, correo: usuario.email, nombre: d.nombreCompleto, cedula: d.cedula, direccion: textoDireccion(d) };
+    cliente = { uid: usuario.uid, correo: usuario.email, nombre: d.nombreCompleto, cedula: d.cedula, direccion: textoDireccion(d) };
     $("#r-dir").textContent = "Envío a: " + cliente.direccion;
     $("#titular").value = (d.nombreCompleto || "").toUpperCase();
     $("#t-nom").textContent = $("#titular").value || "NOMBRE APELLIDO";
@@ -282,8 +298,8 @@ function mostrarFactura(textoMetodo) {
   $("#f-sub").textContent = money(total);
   $("#f-total").textContent = money(total);
 
-  // El pago ya se hizo: se vacía el carrito
-  localStorage.removeItem("it_cart");
+  // El pago ya se hizo: se vacía el carrito de este usuario
+  if (claveCarrito) localStorage.removeItem(claveCarrito);
 
   $("#vista-pago").classList.add("oculto");
   $("#vista-factura").classList.remove("oculto");
